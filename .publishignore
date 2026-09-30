@@ -1,10 +1,8 @@
 # Dotfiles and dotdirectories
 .*
 
-# Guides, docs, and non-package folders
+# Guide
 guide/
-CHANGELOG.md
-CONTRIBUTING.md
 
 # Build and configuration files
 justfile
