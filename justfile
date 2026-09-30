@@ -40,6 +40,11 @@ release_dir := if os() == "macos" {
 }
 
 ##################################################
+# MODULES
+#
+mod publish "publish.just"
+
+##################################################
 # COMMANDS
 #
 # List all commands

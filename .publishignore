@@ -1,0 +1,12 @@
+# Dotfiles and dotdirectories
+.*
+
+# Guides, docs, and non-package folders
+guide/
+CHANGELOG.md
+CONTRIBUTING.md
+
+# Build and configuration files
+justfile
+*.just
+cliff.toml
