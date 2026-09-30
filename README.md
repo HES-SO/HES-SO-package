@@ -54,7 +54,7 @@ This package is based on the work done for the HEI-Vs templates
 
 ## Contributing
 
-All notable information about contributing to this project can be found in the [CONTRIBUTING.md](https://github.com/hes-so/HES-SO-package/blob/main/CONTRIBUTING.md) file.
+All notable information about contributing to this project can be found in the [CONTRIBUTING.md](./CONTRIBUTING.md) file.
 
 ## Issues and Support
 
