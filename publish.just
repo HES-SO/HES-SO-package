@@ -77,6 +77,14 @@ to-packages version:
     exit 1
   fi
 
+  commit_sha=$(git rev-parse HEAD)
+
+  repo_url=$(grep -E '^repository\s*=' typst.toml 2>/dev/null | head -n1 | sed -E 's/repository\s*=\s*["'"'"']([^"'"'"']+)["'"'"']/\1/' | tr -d ' ' || true)
+  if [ -z "$repo_url" ]; then
+    repo_url="https://github.com/hes-so/HES-SO-package"
+  fi
+  repo_url="${repo_url%/}"
+
   # 6. Prepare branch in packages repository: <pkg_name>/<version>
   target_branch="${pkg_name}/{{version}}"
   echo "==> Preparing branch '$target_branch' in packages repository..."
@@ -99,7 +107,14 @@ to-packages version:
     rsync -av --delete --exclude='.*' --exclude='justfile' --exclude='cliff.toml' "{{project_dir}}/" "$dest_dir/"
   fi
 
-  # 8. Validate publication
+  # 8. Update guide link in published README.md
+  if [ -f "$dest_dir/README.md" ]; then
+    guide_permalink="${repo_url}/tree/${commit_sha}/guide"
+    echo "==> Updating guide link in $dest_dir/README.md to $guide_permalink..."
+    sed -E "s|\((\./)?guide/?\)|(${guide_permalink})|g" "$dest_dir/README.md" > "$dest_dir/README.md.tmp" && mv "$dest_dir/README.md.tmp" "$dest_dir/README.md"
+  fi
+
+  # 9. Validate publication
   if [ ! -f "$dest_dir/typst.toml" ]; then
     echo "Error: typst.toml not found in $dest_dir!"
     exit 1
@@ -114,6 +129,7 @@ to-packages version:
   echo "=================================================="
   echo "Package '${pkg_name}' version {{version}} copied successfully!"
   echo "  Current branch       : $branch"
+  echo "  Commit SHA           : $commit_sha"
   echo "  Packages branch      : $target_branch"
   echo "  Destination directory: $dest_dir"
   echo "=================================================="
