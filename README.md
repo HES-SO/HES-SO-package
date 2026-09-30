@@ -60,10 +60,6 @@ All notable information about contributing to this project can be found in the [
 
 If you encounter any issues or have questions regarding the course or any of the repositories, please feel free to open an issue in the respective repository. Our team will be happy to assist you.
 
-## Changelog
-
-All notable changes to this project are documented in the [CHANGELOG.md](https://github.com/hes-so/HES-SO-package/blob/main/CHANGELOG.md) file.
-
 ## Find us on
 
 [hes-so.ch](https://www.hes-so.ch/accueil) &nbsp;&middot;&nbsp;
