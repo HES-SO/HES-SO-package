@@ -44,6 +44,13 @@
 //-------------------------------------
 // Internationalization
 //
+
+/// Get a translation in the given language
+///
+/// - key (string): translation key
+/// - lang (string): target language id
+/// - extra-i18n (dictionary, none): extra i18n languages and keys (can override default translations)
+/// -> string, content
 #let i18n(
   key,
   lang: "en",
@@ -69,6 +76,11 @@
   return keys.at(key)
 }
 
+/// Get the figure complement for a given object
+///
+/// - lang (string): target language id
+/// - it (content): object of which to get the complement
+/// -> content, str, auto
 #let get-supplement(
   lang: "en",
   it
@@ -87,6 +99,12 @@
   }
 }
 
+/// Get a translation for the given gender and in the given language
+///
+/// - gender (string): target gender id
+/// - key-base (string): base translation key
+/// - lang (string): target language id
+/// -> content, str
 #let get-gendered-label(
   gender,
   key-base,
@@ -104,6 +122,13 @@
 //-------------------------------------
 // Reference helper function
 //
+
+/// Safely reference a label
+/// 
+/// Display a red question mark if the label cannot be found
+///
+/// - label (label): target label
+/// -> content
 #let myref(label) = locate(loc =>{
   if query(label,loc).len() != 0 {
     ref(label)
@@ -115,6 +140,13 @@
 //-------------------------------------
 // Sanitization helper function
 //
+
+/// Combine a dictionary with default values and check required keys
+///
+/// - dict (dictionary): modified values
+/// - defaults (dictionary): default values
+/// - required (string, array): required key(s) that must be set and not none
+/// -> dictionary
 #let apply-dict-defaults(
   dict,
   defaults: (:),
@@ -136,6 +168,11 @@
 //-------------------------------------
 // Specifications
 //
+
+/// Display a full-page image
+///
+/// - path (path, none): image path
+/// -> content
 #let full-page(path) = {
   set page(margin: (
     top: 0cm,
@@ -165,6 +202,14 @@
 //-------------------------------------
 // Table of content
 //
+
+/// Display tables of contents, figures, tables, etc.
+///
+/// - tableof (dictionary): outline selection and parameters
+/// - titles (dictionary): outline titles
+/// - before (function, label, location, selector, none): end boundary for entries in the outlines
+/// - indent (auto, length): outline indent size
+/// -> content
 #let toc(
   tableof: (
     toc: true,
@@ -244,6 +289,17 @@
   }
 }
 
+/// Display a mini table of contents for a specific section
+///
+/// - after (function, label, location, selector): start boundary for entries in the outline
+/// - before (function, label, location, selector): end boundary for entries in the outline
+/// - addline (bool): whether to add lines before and after the outline
+/// - stroke (stroke): stroke for the lines around the outline
+/// - length (ratio, length): length of the lines around the outline
+/// - depth (int): outline depth
+/// - title (content): outline title
+/// - indent (auto, length): outline indent size
+/// -> content
 #let minitoc(
   after: none,
   before: none,
@@ -281,6 +337,10 @@
   }
 }
 
+/// Display an outline of TODOs
+///
+/// - title (content): outline title
+/// -> content
 #let outline-todos(title: [TODOS]) = context {
   heading(numbering: none, outlined: false, title)
 
@@ -322,7 +382,23 @@
 //--------------------------------------
 // Heading shift
 //
-// #unshift-prefix[Prefix][Body]
+
+/// Display some content with a prefix in the margin
+/// 
+/// = Example
+/// ```example
+/// #unshift-prefix[Prefix][Body]
+/// #lorem(5)
+/// ```
+/// shows as:
+/// ```
+/// PrefixBody
+///       Lorem ipsum dolor sit amet
+/// ```
+///
+/// - prefix (content): prefix in the margin
+/// - content (content): main content
+/// -> content
 #let unshift-prefix(prefix, content) = context {
   pad(left: -measure(prefix).width, prefix + content)
 }
@@ -332,6 +408,12 @@
 //
 // item, item, item and item List
 //
+
+/// Format a list of authors
+///
+/// - items (array, none): authors metadata
+/// - multiline (bool): whether to show multiple authors on separate lines
+/// -> content
 #let enumerating-authors(
   items: none,
   multiline: false,
@@ -364,6 +446,10 @@
   }
 }
 
+/// Format a list of people and their affiliations
+///
+/// - items (array, none): list of people dictionaries
+/// -> content
 #let enumerating-affiliation(
   items: none,
 ) = {
@@ -383,6 +469,13 @@
 //
 // item, item, item and item List
 //
+
+/// Format a list of items
+///
+/// - items (array, none): list of items
+/// - bold (bool): whether to show items in bold
+/// - italic (bool): whether to show items in italic
+/// -> content
 #let enumerating-items(
   items: none,
   bold: false,
@@ -407,6 +500,12 @@
     }
   }
 }
+
+/// Format a list of links
+///
+/// - names (array): list of link texts
+/// - links (array): list of link URLs
+/// -> content
 #let enumerating-links(
   names: none,
   links: none,
@@ -437,6 +536,12 @@
     }
   }
 }
+
+/// Format a list of email addresses
+///
+/// - names (array): list of email display texts
+/// - emails (array): list of email addresses
+/// -> content
 #let enumerating-emails(
   names:  none,
   emails: none,
@@ -471,6 +576,12 @@
 //-------------------------------------
 // safe-link
 //
+
+/// Safely display a link with optionally missing data
+///
+/// - name (content, none): display text
+/// - url (string, none): url
+/// -> content, none
 #let safe-link(
   name: none,
   url: none,
@@ -493,6 +604,16 @@
 //-------------------------------------
 // Chapter
 //
+
+/// Display a chapter with the given heading offset and optionally prepend a mini table of contents
+///
+/// - heading-offset (int): heading numbering offset
+/// - after (function, label, location, selector): start boundary for entries in the outline
+/// - before (function, label, location, selector): end boundary for entries in the outline
+/// - pb (bool): whether to add a page break between the outline and the heading
+/// - minitoc-title (content): title of the outline
+/// - body (content): the chapter's body
+/// -> content
 #let add-chapter(
   heading-offset: 0,
   after: none,
@@ -517,6 +638,12 @@
 //-------------------------------------
 // Sustainable development goals
 //
+
+/// Display a sustainable development goal icon
+///
+/// - goal (int, str): goal id (between 1 and 17 incl.)
+/// - size (length): icon size
+/// -> content
 #let sdg(
   goal,
   size: 5cm,
@@ -536,7 +663,11 @@
   }
 }
 
-// Merge two or more dictionaries (recursively for nested dictionaries)
+/// Merge two or more dictionaries (recursively for nested dictionaries)
+///
+/// - base (dictionary): base dictionary
+/// - extras (dictionary): additional dictionaries to recursively merge on top of `base`
+/// -> dictionary
 #let merge-dicts(base, ..extras) = {
   assert(type(base) == dictionary)
   let merged = base
