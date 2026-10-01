@@ -4,6 +4,12 @@
 //
 #import "constants.typ": *
 
+/// Display a list item with a custom marker icon
+///
+/// - height (length): height of item markers
+/// - icon (bytes): raw item marker image bytes (see `icons` dictionnary in constants)
+/// - body (content): item content
+/// -> content
 #let item-list(
   height: normal,
   icon: icons.check-square,
