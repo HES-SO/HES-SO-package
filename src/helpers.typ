@@ -409,6 +409,23 @@
 // item, item, item and item List
 //
 
+/// Always return an array of non-none elements
+/// 
+/// Panics if `arr-or-none` is neither none nor an array
+///
+/// - arr-or-none (array, none): array or none
+/// -> array
+#let _safe-array(arr-or-none) = {
+  if arr-or-none == none {
+    return ()
+  }
+  assert(
+    type(arr-or-none) == array,
+    message: "Expected array, got " + repr(type(arr-or-none))
+  )
+  return arr-or-none.filter(i => i != none)
+}
+
 /// Format a list of authors
 ///
 /// - items (array, none): authors metadata
@@ -418,32 +435,13 @@
   items: none,
   multiline: false,
 ) = {
-  let i = 1
-  if items != none {
-    for item in items {
-      if item != none {
-        if "name" in item {
-          if i > 1 {
-            if multiline {
-              if items.len() > 2 {
-                [\ ]
-              } else {
-                [, ]
-              }
-            } else {
-              [, ]
-            }
-          }
-          i = i + 1
-          if "affiliation" in item{
-            [#item.name#super(repr(item.affiliation))]
-          } else {
-            [#item.name]
-          }
-        }
-      }
-    }
-  }
+  let items = _safe-array(items).filter(i => "name" in i)
+  let separator = if multiline and items.len() > 2 [\ ] else [, ]
+
+  items.map(item => {
+    if "affiliation" in item [#item.name#super[#item.affiliation]]
+    else [#item.name]
+  }).join(separator)
 }
 
 /// Format a list of people and their affiliations
@@ -453,14 +451,10 @@
 #let enumerating-affiliation(
   items: none,
 ) = {
-  let i = 1
-  if items != none {
-    for item in items {
-      if item != none {
-        [_#super(repr(i))_ #if item.research_group != none { [_ #item.research_group - _]} _ #item.name __, #item.address _ \ ]
-        i = i + 1
-      }
-    }
+  let items = _safe-array(items)
+  for (i, item) in items.enumerate(start: 1) {
+    let group = if item.research_group != none [_ #item.research_group - _]
+    [_#super[#i]_ #group _ #item.name __, #item.address _ \ ]
   }
 }
 
@@ -481,24 +475,18 @@
   bold: false,
   italic: false,
 ) = {
-  if items != none {
-    for (i, item) in items.enumerate() {
-      if item != none {
-        if i > 0 {
-          [, ]
-        }
-        if bold == true and italic == true {
-          text(style: "italic")[*#item*]
-        } else if bold == true {
-          [*#item*]
-        } else if italic == true {
-          text(style: "italic")[#item]
-        } else {
-          [#item]
-        }
+  let items = _safe-array(items)
+  items.map(
+    item => {
+      if bold {
+        item = strong(item)
       }
+      if italic {
+        item = text(style: "italic", item)
+      }
+      item
     }
-  }
+  ).join[, ]
 }
 
 /// Format a list of links
@@ -510,31 +498,21 @@
   names: none,
   links: none,
 ) = {
-  if names != none {
-    for (i, name) in names.enumerate() {
-      if name != none {
-        if i > 0 {
-          [, ]
-        }
-        link(links.at(i))[#name]
-      }
-    }
-  }
+  let names = _safe-array(names)
+  let links = _safe-array(links)
+  links.zip(names, exact: true).map(
+    ((l, n)) => link(l, n)
+  ).join[, ]
 }
 #let listing-links(
   names: none,
   links: none,
 ) = {
-  if names != none {
-    for (i, name) in names.enumerate() {
-      if name != none {
-        if i > 0 {
-          [ \ ]
-        }
-        link(links.at(i))[#name]
-      }
-    }
-  }
+  let names = _safe-array(names)
+  let links = _safe-array(links)
+  links.zip(names, exact: true).map(
+    ((l, n)) => link(l, n)
+  ).join[ \ ]
 }
 
 /// Format a list of email addresses
@@ -546,31 +524,23 @@
   names:  none,
   emails: none,
 ) = {
-  if names != none {
-    for (i, name) in names.enumerate() {
-      if name != none {
-        if i > 0 {
-          [, ]
-        }
-        link("mailto:"+emails.at(i))[#name]
-      }
-    }
-  }
+  let names = _safe-array(names)
+  let emails = _safe-array(emails)
+  enumerating-links(
+    names: names,
+    links: emails.map(email => "mailto:" + email)
+  )
 }
 #let listing-emails(
   names:  none,
   emails: none,
 ) = {
-  if names != none {
-    for (i, name) in names.enumerate() {
-      if name != none {
-        if i > 0 {
-          [ \ ]
-        }
-        link("mailto:"+emails.at(i))[#name]
-      }
-    }
-  }
+  let names = _safe-array(names)
+  let emails = _safe-array(emails)
+  listing-links(
+    names: names,
+    links: emails.map(email => "mailto:" + email)
+  )
 }
 
 //-------------------------------------
@@ -586,18 +556,14 @@
   name: none,
   url: none,
 ) = {
-  if name != none {
-    if url != none {
-      link(url)[#name]
-    } else  {
-      name
-    }
+  if url == none {
+    name
   } else {
-    if url != none {
-      link(url)[#url]
-    } else {
-      none
-    }
+    link(
+      url,
+      if name == none {url}
+      else {name}
+    )
   }
 }
 
