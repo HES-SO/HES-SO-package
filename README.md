@@ -15,7 +15,7 @@
 </div>
 
 This is a master package for all HES-SO Typst templates and packages. The purpose of this package is to be used as base for other package or as package part of template.
-Template can be found in our [GitHub organization](https://github.com/hes-so).
+Template can be found in our [GitHub organization](https://github.com/HES-SO).
 
 
 ## Using the package
@@ -42,9 +42,9 @@ Template can be found in our [GitHub organization](https://github.com/hes-so).
 
 If you need help writing your document look at the [Typst documentation](https://typst.app/docs/).
 For the package specifics, have a look at the Guide to Typst built from the [`guide/`](./guide) folder:
-[EN](https://github.com/hes-so/HES-SO-package/releases/latest/download/guide-to-typst-en_minimal.pdf)
-[DE](https://github.com/hes-so/HES-SO-package/releases/latest/download/guide-to-typst-de_minimal.pdf)
-[FR](https://github.com/hes-so/HES-SO-package/releases/latest/download/guide-to-typst-fr_minimal.pdf).
+[EN](https://github.com/HES-SO/HES-SO-package/releases/latest/download/guide-to-typst-en_minimal.pdf)
+[DE](https://github.com/HES-SO/HES-SO-package/releases/latest/download/guide-to-typst-de_minimal.pdf)
+[FR](https://github.com/HES-SO/HES-SO-package/releases/latest/download/guide-to-typst-fr_minimal.pdf).
 
 ## Credits
 

@@ -81,7 +81,7 @@ to-packages version:
 
   repo_url=$(grep -E '^repository\s*=' typst.toml 2>/dev/null | head -n1 | sed -E 's/repository\s*=\s*["'"'"']([^"'"'"']+)["'"'"']/\1/' | tr -d ' ' || true)
   if [ -z "$repo_url" ]; then
-    repo_url="https://github.com/hes-so/HES-SO-package"
+    repo_url="https://github.com/HES-SO/HES-SO-package"
   fi
   repo_url="${repo_url%/}"
 
