@@ -4,9 +4,14 @@
 //
 #import "constants.typ": *
 
-//-------------------------------------
-// Option Style
-//
+/// Display some content with specific text style options
+///
+/// - type (str, none): target type
+/// - size (length): font size
+/// - style (str): font style
+/// - fill (color, gradient, tiling): text color
+/// - body (content): the text to display
+/// -> content
 #let option-style(
   type: none,
   size: small,
@@ -20,9 +25,12 @@
   }
 ]}
 
-//-------------------------------------
-// Todo Box
-//
+/// Display a TODO box
+/// 
+/// A `<todo>` label is attached to the box for querying
+///
+/// - body (content): the TODO's description
+/// -> content
 #let todo(body) = [
   #let rblock = block.with(stroke: red, radius: 0.5em, fill: red.lighten(80%))
   #let top-left = place.with(top + left, dx: 1em, dy: -0.35em)
@@ -33,9 +41,19 @@
   <todo>
 ]
 
-//-------------------------------------
-// Title Box
-//
+/// Display a title in a box (with an optional subtitle)
+///
+/// - width (length, ratio): width of the box
+/// - radius (length, ratio): corner radius of the box
+/// - border (length): thickness of the box border
+/// - inset (length): padding around the content
+/// - outset (length): extra padding not affecting layout
+/// - linecolor (color): box border color
+/// - titlesize (length): font size of the title
+/// - subtitlesize (length): font size of the subtitle
+/// - title (content): the title
+/// - subtitle (content, none): the subtitle
+/// -> content
 #let titlebox(
   width: 100%,
   radius: 10pt,
@@ -70,9 +88,18 @@
   }
 }
 
-//-------------------------------------
-// Icon Boxes
-//
+/// Display some content in a box with an icon on the left
+///
+/// - width (length, ratio): width of the box
+/// - radius (length, ratio): corner radius of the box
+/// - border (length, stroke): thickness of the box border
+/// - inset (length): padding around the content
+/// - outset (length): extra padding not affecting layout
+/// - linecolor (color): box border color
+/// - icon (path, string): icon to display
+/// - iconheight (length): height of the icon
+/// - body (content): the body
+/// -> content
 #let iconbox(
   width: 100%,
   radius: 4pt,
@@ -155,9 +182,15 @@
   icon: icons.help,
 )
 
-//-------------------------------------
-// Color Boxes
-//
+/// Display a colored box with some content and a title in the corner
+///
+/// - title (content): the box title
+/// - color (color): box color
+/// - stroke (stroke): box border stroke
+/// - radius (length): box corner radius
+/// - width (length, ratio, auto): box width
+/// - body (content): the body
+/// -> content
 #let colorbox(
   title: "title",
   color: colors.icon.todo,
@@ -191,6 +224,11 @@
   ]
 }
 
+/// Display a bookmark-like slanted box with some text
+///
+/// - color (color): background color
+/// - body (content): the body
+/// -> content
 #let slanted-background(
   color: black, body) = {
   set text(fill: white, weight: "bold")
@@ -210,6 +248,8 @@
   }
 }
 
+/// Display a colorbox with slanted-background for the title
+/// -> content
 #let slanted-colorbox(
   title: "title",
   color: colors.icon.todo,
@@ -237,9 +277,12 @@
   ]
 }
 
-//-------------------------------------
-// Exam header
-//
+/// Display an exam header table to mark exercise scores
+///
+/// - nbr-ex (int): number of exercises
+/// - pts (int): total number of points
+/// - lang (str): display language
+/// -> content
 #let exam-header(
   nbr-ex: 5+1,
   pts: 10,
