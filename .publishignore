@@ -1,0 +1,10 @@
+# Dotfiles and dotdirectories
+.*
+
+# Guide
+guide/
+
+# Build and configuration files
+justfile
+*.just
+cliff.toml

@@ -15,7 +15,7 @@
 </div>
 
 This is a master package for all HES-SO Typst templates and packages. The purpose of this package is to be used as base for other package or as package part of template.
-Template can be found in our [GitHub organization](https://github.com/hes-so).
+Template can be found in our [GitHub organization](https://github.com/HES-SO).
 
 
 ## Using the package
@@ -23,7 +23,7 @@ Template can be found in our [GitHub organization](https://github.com/hes-so).
 1. To use this package, simply add the following code to your document:
 
    ```typst
-   #import "@preview/hes-so-package:0.0.6": *
+   #import "@preview/hes-so-package:0.1.0": *
    ```
 
 ## Features
@@ -42,9 +42,9 @@ Template can be found in our [GitHub organization](https://github.com/hes-so).
 
 If you need help writing your document look at the [Typst documentation](https://typst.app/docs/).
 For the package specifics, have a look at the Guide to Typst built from the [`guide/`](./guide) folder:
-[EN](https://github.com/hes-so/HES-SO-package/releases/latest/download/guide-to-typst-en_minimal.pdf)
-[DE](https://github.com/hes-so/HES-SO-package/releases/latest/download/guide-to-typst-de_minimal.pdf)
-[FR](https://github.com/hes-so/HES-SO-package/releases/latest/download/guide-to-typst-fr_minimal.pdf).
+[EN](https://github.com/HES-SO/HES-SO-package/releases/latest/download/guide-to-typst-en_minimal.pdf)
+[DE](https://github.com/HES-SO/HES-SO-package/releases/latest/download/guide-to-typst-de_minimal.pdf)
+[FR](https://github.com/HES-SO/HES-SO-package/releases/latest/download/guide-to-typst-fr_minimal.pdf).
 
 ## Credits
 
@@ -54,15 +54,11 @@ This package is based on the work done for the HEI-Vs templates
 
 ## Contributing
 
-All notable information about contributing to this project can be found in the [CONTRIBUTING.md](https://github.com/hes-so/HES-SO-package/blob/main/CONTRIBUTING.md) file.
+All notable information about contributing to this project can be found in the [CONTRIBUTING.md](./CONTRIBUTING.md) file.
 
 ## Issues and Support
 
 If you encounter any issues or have questions regarding the course or any of the repositories, please feel free to open an issue in the respective repository. Our team will be happy to assist you.
-
-## Changelog
-
-All notable changes to this project are documented in the [CHANGELOG.md](https://github.com/hes-so/HES-SO-package/blob/main/CHANGELOG.md) file.
 
 ## Find us on
 

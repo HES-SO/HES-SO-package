@@ -13,7 +13,7 @@ As this package is intended for use with all templates / documents in HES-SO, th
 - #link("https://typst.app/universe/package/icu-datetime/")[icu-datetime] - Date and time formatting
 - #link("https://typst.app/universe/package/cheq/")[cheq] - Markdown-like checklists
 - #link("https://typst.app/universe/package/mmdr/")[mmdr] - A Mermaid diagram renderer
-- all files can be found in the #link("https://github.com/hes-so/HES-SO-package")[github repo] such as
+- all files can be found in the #link("https://github.com/HES-SO/HES-SO-package")[github repo] such as
   - `boxes.typ`
   - `constants.typ`
   - `helpers.typ`

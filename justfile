@@ -11,10 +11,10 @@ open := if os() == "linux" {
 
 project_dir   := justfile_directory()
 project_name  := file_stem(justfile_directory())
-project_tag   := "0.0.6"
+project_tag   := "0.1.0"
 
 typst_version := "typst -V"
-typst_github  := "https://github.com/typst/typst --tag v0.14.2"
+typst_github  := "https://github.com/typst/typst --tag v0.15.0"
 
 template_dir  := join(justfile_directory(), "template")
 doc_name      := "guide-to-typst"
@@ -40,6 +40,11 @@ release_dir := if os() == "macos" {
 }
 
 ##################################################
+# MODULES
+#
+mod publish "publish.just"
+
+##################################################
 # COMMANDS
 #
 # List all commands
@@ -54,6 +59,12 @@ release_dir := if os() == "macos" {
   echo "    Typst       : `{{typst_version}}`"
   echo "    Projectdir  : {{project_dir}}"
   echo "    Projectname : {{project_name}}"
+
+# configure git to use repository hooks
+@setup-hooks:
+  git config core.hooksPath .githooks
+  chmod +x .githooks/* || true
+  echo "Git hooks configured successfully (.githooks)"
 
 # install required sw
 [windows]
@@ -217,3 +228,6 @@ open file_name=doc_name:
   del /q /s template\metadata.pdf 2>nul
   del /q /s template\main\*.pdf 2>nul
   del /q /s template\tail\*.pdf 2>nul
+
+@todo:
+    typst eval "query(<todo>).map(m => m.value.body)" --in document.typ

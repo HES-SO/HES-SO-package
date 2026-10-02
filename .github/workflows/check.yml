@@ -24,7 +24,7 @@ jobs:
           JUSTFILE=$(awk -F'"' '/^project_tag/ {print $2; exit}' justfile)
           README=$(grep -o '@preview/hes-so-package:[0-9.]\+' README.md | head -n1 | awk -F: '{print $2}')
           METADATA=$(grep -o '@preview/hes-so-package:[0-9.]\+' guide/01-settings/metadata.typ | head -n1 | awk -F: '{print $2}')
-          LIB=$(awk -F'[()]' '/^#let version *= *version/ {print $2; exit}' src/lib.typ | tr -d ' ' | tr ',' '.')
+          LIB=$(awk -F'[()]' '/^#let version *= *std.version/ {print $2; exit}' src/lib.typ | tr -d ' ' | tr ',' '.')
           echo "typst.toml: $TYPST_TOML"
           echo "justfile:   $JUSTFILE"
           echo "README.md:  $README"
@@ -35,6 +35,16 @@ jobs:
             exit 1
           fi
           echo "All versions match: $REF_VERSION"
+
+          COMPILER_TOML=$(awk -F'"' '/^compiler *=/ {print $2; exit}' typst.toml)
+          JUSTFILE_COMPILER=$(grep -o 'tag v[0-9.]\+' justfile | head -n1 | awk -F'v' '{print $2}')
+          echo "typst.toml (compiler):    $COMPILER_TOML"
+          echo "justfile (compiler):      $JUSTFILE_COMPILER"
+          if [ "$COMPILER_TOML" != "$JUSTFILE_COMPILER" ] ; then
+            echo "Typst compiler version mismatch detected!"
+            exit 1
+          fi
+          echo "All compiler versions match: $COMPILER_TOML"
 
 
   check-build:
