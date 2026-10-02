@@ -373,8 +373,13 @@
     [#head.heading.location().page()]
 
     linebreak()
-    pad(left: 1em, head.todos.map((todo) => {
-      list.item(link(todo.location(), todo.body.children.at(0).body))
+    pad(left: 1em, head.todos.map(todo => {
+      list.item(
+        link(
+          todo.location(),
+          todo.value.body
+        )
+      )
     }).join())
   }
 }

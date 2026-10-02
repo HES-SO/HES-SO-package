@@ -32,12 +32,34 @@
 /// - body (content): the TODO's description
 /// -> content
 #let todo(body) = [
-  #let rblock = block.with(stroke: red, radius: 0.5em, fill: red.lighten(80%))
-  #let top-left = place.with(top + left, dx: 1em, dy: -0.35em)
-  #block(inset: (top: 0.35em), {
-    rblock(width: 100%, inset: 1em, body)
-    top-left(rblock(fill: white, outset: 0.25em, text(fill: red)[*TODO*]))
-  })
+  #let rblock = block.with(
+    stroke: red,
+    radius: 0.5em,
+    fill: red.lighten(80%)
+  )
+  #let top-left = place.with(
+    top + left,
+    dx: 1em,
+    dy: -0.35em
+  )
+  #block(
+    inset: (top: 0.35em),
+    {
+      rblock(
+        width: 100%,
+        inset: 1em,
+        body
+      )
+      top-left(
+        rblock(
+          fill: white,
+          outset: 0.25em,
+          text(fill: red)[*TODO*]
+        )
+      )
+    }
+  )
+  #metadata((body: body))
   <todo>
 ]
 
