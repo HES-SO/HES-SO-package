@@ -14,7 +14,7 @@
 // Glossarium for glossary
 #import "@preview/glossarium:0.5.10": *
 // Wordometer for word and character count
-#import "@preview/wordometer:0.1.5": word-count
+#import "@preview/wordometer:0.1.6": word-count
 // add datetime support for other languages
 #import "@preview/icu-datetime:0.2.2"
 // List with Checkmarks
@@ -127,7 +127,7 @@
 //
 
 /// Safely reference a label
-/// 
+///
 /// Display a red question mark if the label cannot be found
 ///
 /// - label (label): target label
@@ -404,7 +404,7 @@
 //
 
 /// Display some content with a prefix in the margin
-/// 
+///
 /// = Example
 /// ```example
 /// #unshift-prefix[Prefix][Body]
@@ -430,7 +430,7 @@
 //
 
 /// Always return an array of non-none elements
-/// 
+///
 /// Panics if `arr-or-none` is neither none nor an array
 ///
 /// - arr-or-none (array, none): array or none
