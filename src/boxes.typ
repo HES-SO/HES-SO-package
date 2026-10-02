@@ -3,6 +3,7 @@
 // Author     : Silvan Zahno
 //
 #import "constants.typ": *
+#import "i18n.typ": i18n
 
 /// Display some content with specific text style options
 ///
@@ -324,13 +325,13 @@
     cells.push(column)
   }
 
-  let name-label = if lang == "en" or lang == "de" {"Name:"} else {"Nom:"}
+  let name-label = i18n("exam-name", lang: lang)
   let widths = ()
 
   // Create grade box
   if nbr-ex > 0 {
     widths = (box-size,) * (nbr-ex - 1)
-    let grade-label = if lang == "en" {"Grade"} else {"Note"}
+    let grade-label = i18n("exam-grade", lang: lang)
 
     widths.push(1.3 * box-size)
     cells.push((
