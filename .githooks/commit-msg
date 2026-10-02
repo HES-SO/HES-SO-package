@@ -1,0 +1,166 @@
+#!/usr/bin/env bash
+# .githooks/commit-msg
+#
+# Enforces Conventional Commits specification based on:
+# - https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13
+# - cliff.toml configuration
+#
+# Features:
+# 1. Allows automated commits: Merge, Revert, fixup!, squash!
+# 2. Enforces subject: <type>(<scope>)?: <description> or <type>(<scope>)?!: <description>
+# 3. Disallows capital letters or trailing periods in description
+# 4. Disallows issue identifiers as scope (e.g. feat(#42) is prohibited)
+# 5. Enforces empty line between subject and body/footer
+# 6. Validates trailers without typos:
+#    - Co-authored-by: Full Name <email@example.com>
+#    - Assisted-by: <agent>:<model>
+#    - Reviewed-on: #<number> (or URL)
+#    - Reviewed-by: Name <email> or Name email
+#    - Closes: #<number> / Fixes: #<number> / Resolves: #<number>
+#    - Rejects sloppy issue closures ("finish ticket 18", "closed 42", etc.)
+
+set -euo pipefail
+
+commit_msg_file="$1"
+
+# 1. Normalize line endings (strip CRLF to LF for cross-platform Windows compatibility)
+# and ignore Git commented lines (#)
+clean_msg=$(tr -d '\r' < "$commit_msg_file" | grep -v "^#" || true)
+
+# If message is empty after stripping comments, Git aborts on its own
+if [ -z "$(echo "$clean_msg" | tr -d '[:space:]')" ]; then
+  exit 0
+fi
+
+# 2. Allow merge commits, revert commits, and autosquash commits
+first_line=$(echo "$clean_msg" | head -n 1)
+ignore_regex="^(Merge[[:space:]]|Revert[[:space:]]|fixup!|squash!)"
+if [[ "$first_line" =~ $ignore_regex ]]; then
+  exit 0
+fi
+
+errors=()
+
+# 3. Validate Header / Subject line
+# Syntax: <type>(<scope>)?: <description>  or  <type>(<scope>)?!: <description>
+full_subject_regex="^([a-z]+)(\(([^)]+)\))?(!)?:\ (.+)$"
+if ! [[ "$first_line" =~ $full_subject_regex ]]; then
+  errors+=("Invalid commit subject line: \"$first_line\"
+     Expected format: '<type>(<optional-scope>): <description>' or '<type>!: <description>'
+     Example: feat(template): add French translation")
+else
+  type="${BASH_REMATCH[1]}"
+  scope="${BASH_REMATCH[3]}"
+  breaking="${BASH_REMATCH[4]}"
+  desc="${BASH_REMATCH[5]}"
+
+  # Allowed types matching cliff.toml and Conventional Commits cheatsheet
+  allowed_types="^(feat|fix|refactor|perf|style|test|docs|build|ops|chore|chores|security|revert)$"
+  if ! [[ "$type" =~ $allowed_types ]]; then
+    errors+=("Invalid commit type: \"$type\"
+     Allowed types: feat, fix, refactor, perf, style, test, docs, build, ops, chore, security, revert")
+  fi
+
+  # Scope rules
+  if [ -n "$scope" ]; then
+    if [[ "$scope" =~ ^#?[0-9]+$ ]]; then
+      errors+=("Do not use issue identifiers as scope: \"($scope)\". Use footer trailers like 'Closes: #$scope' instead.")
+    elif ! [[ "$scope" =~ ^[a-zA-Z0-9_.-]+([[:space:]][a-zA-Z0-9_.-]+)*$ ]]; then
+      errors+=("Invalid characters in scope: \"($scope)\".")
+    fi
+  fi
+
+  # Description rules: imperative present tense, no initial capital, no trailing period
+  if [[ "$desc" =~ ^[A-Z] ]]; then
+    errors+=("Description must not start with a capital letter: \"$desc\"
+     Use imperative lowercase (e.g. 'add' not 'Add', 'change' not 'Change').")
+  fi
+
+  if [[ "$desc" =~ \.$ ]]; then
+    errors+=("Description must not end with a period ('.').")
+  fi
+fi
+
+# 4. If there is a body, enforce an empty line between subject and body
+total_lines=$(echo "$clean_msg" | wc -l)
+if [ "$total_lines" -gt 1 ]; then
+  line_2=$(echo "$clean_msg" | sed -n '2p')
+  if [ -n "$line_2" ]; then
+    errors+=("Missing blank line between commit title and body.")
+  fi
+fi
+
+# 5. Regexes for footers / trailers
+coauthor_hint="^[Cc]o-?[Aa]uthor"
+coauthor_valid="^Co-authored-by: [^<]+ <[^>@]+@[^>@]+>$"
+
+assist_hint="^[Aa]ssist"
+assist_valid="^Assisted-by: [a-zA-Z0-9_.-]+:[a-zA-Z0-9_.-]+$"
+
+rev_on_hint="^[Rr]eviewed[ -]on"
+rev_on_valid="^Reviewed-on: (#[0-9]+|https?://\S+)([[:space:]]+Reviewed-by:.*)?$"
+
+rev_by_hint="^[Rr]eviewed[ -]by"
+rev_by_valid="^Reviewed-by: .+$"
+
+sloppy_ticket="([Ff]inish.*[0-9]|^(closed|close|closes|fixed|fix|fixes|resolved|resolves)[[:space:]]+#?[0-9]+|[Tt]icket[[:space:]]*#?[0-9]+)"
+valid_ticket="^(Closes|Fixes|Resolves): #[0-9]+(,\ #[0-9]+)*$"
+closure_hint="^(Closes|Fixes|Resolves):"
+
+# 6. Check lines starting from line 3 (body and trailers)
+while IFS= read -r line; do
+  [ -z "$line" ] && continue
+
+  # Validate Co-authored-by
+  if [[ "$line" =~ $coauthor_hint ]] && ! [[ "$line" =~ $coauthor_valid ]]; then
+    errors+=("Invalid Co-authored-by format: \"$line\"
+     Expected: 'Co-authored-by: Full Name <email@example.com>'")
+  fi
+
+  # Validate Assisted-by
+  if [[ "$line" =~ $assist_hint ]] && ! [[ "$line" =~ $assist_valid ]]; then
+    errors+=("Invalid Assisted-by format: \"$line\"
+     Expected: 'Assisted-by: <agent>:<model>' (e.g. 'Assisted-by: zed:gemini-3.8-flash')")
+  fi
+
+  # Validate Reviewed-on
+  if [[ "$line" =~ $rev_on_hint ]] && ! [[ "$line" =~ $rev_on_valid ]]; then
+    errors+=("Invalid Reviewed-on format: \"$line\"
+     Expected: 'Reviewed-on: #42' or URL")
+  fi
+
+  # Validate Reviewed-by (standalone)
+  if [[ "$line" =~ $rev_by_hint ]] && ! [[ "$line" =~ $rev_by_valid ]]; then
+    errors+=("Invalid Reviewed-by format: \"$line\"
+     Expected: 'Reviewed-by: Name <email>' or 'Reviewed-by: Name email'")
+  fi
+
+  # Catch sloppy ticket closings
+  if [[ "$line" =~ $sloppy_ticket ]] && ! [[ "$line" =~ $valid_ticket ]]; then
+    errors+=("Invalid ticket reference: \"$line\"
+     Expected git trailer format: 'Closes: #42' or 'Fixes: #42'")
+  fi
+
+  # Validate strict format when Closes/Fixes/Resolves is used
+  if [[ "$line" =~ $closure_hint ]] && ! [[ "$line" =~ $valid_ticket ]]; then
+    errors+=("Invalid issue closure format: \"$line\"
+     Expected: 'Closes: #<number>' (e.g. 'Closes: #42')")
+  fi
+
+done < <(echo "$clean_msg" | tail -n +3)
+
+# 7. Output result
+if [ ${#errors[@]} -ne 0 ]; then
+  echo ""
+  echo "❌ Commit rejected: conventional commit or trailer requirements not met:"
+  echo ""
+  for err in "${errors[@]}"; do
+    echo "  • $err"
+    echo ""
+  done
+  echo "See cheatsheet: https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13"
+  echo ""
+  exit 1
+fi
+
+exit 0

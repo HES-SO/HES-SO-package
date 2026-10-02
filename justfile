@@ -60,6 +60,12 @@ mod publish "publish.just"
   echo "    Projectdir  : {{project_dir}}"
   echo "    Projectname : {{project_name}}"
 
+# configure git to use repository hooks
+@setup-hooks:
+  git config core.hooksPath .githooks
+  chmod +x .githooks/* || true
+  echo "Git hooks configured successfully (.githooks)"
+
 # install required sw
 [windows]
 [linux]
@@ -222,3 +228,6 @@ open file_name=doc_name:
   del /q /s template\metadata.pdf 2>nul
   del /q /s template\main\*.pdf 2>nul
   del /q /s template\tail\*.pdf 2>nul
+
+@todo:
+    typst eval "query(<todo>).map(m => m.value.body)" --in document.typ
