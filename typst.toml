@@ -6,7 +6,7 @@ authors = [
   "Silvan Zahno <https://github.com/tschinz>",
   "Rémi Heredero <https://github.com/Klagarge>",
   "Louis Heredero <https://github.com/LordBaryhobal>",
-  "HES-SO <https://hes-so.ch"
+  "HES-SO <https://hes-so.ch>"
 ]
 repository = "https://github.com/HES-SO/HES-SO-package"
 homepage = "https://www.hes-so.ch/accueil"
