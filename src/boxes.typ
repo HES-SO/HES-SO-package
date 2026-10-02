@@ -13,15 +13,19 @@
 /// - body (content): the text to display
 /// -> content
 #let option-style(
-  type: none,
+  type-to-display: none,
+  type-of-doc: none,
   size: small,
   style: "italic",
   fill: colors.gray-40,
-  body) = {[
-  #if type == none {
+  body
+) = {[
+  #if type-to-display != none or type-of-doc != none {
     text(size:size, style:style, fill:fill)[#body]
   } else {
-    if type == "draft" {text(size:size, style:style, fill:fill)[#body]}
+    if type-to-display == type-of-doc {
+      text(size:size, style:style, fill:fill)[#body]
+    }
   }
 ]}
 

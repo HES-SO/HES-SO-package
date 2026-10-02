@@ -749,34 +749,37 @@
 
   Custom option style is available in the #link("https://github.com/HES-SO/HES-SO-package/blob/main/lib/boxes.typ")[boxes.typ]:
 
-  #option-style(type:"draft")["This text has an option style and is shown in the case the type is draft"]
+  #option-style(
+    type-to-display:"draft",
+    type-of-doc: option.type,
+  )["This text has an option style and is shown in the case the type is draft"]
   #sourcecode[```typst
-  #option-style(type:"draft")["This text has an option style and is shown in the case the type is draft"]
+  #option-style(type-to-display:"draft", type-of-doc: option.type)["This text has an option style and is shown in the case the type is draft"]
   ```]
 
-  #option-style(type:"final")["This text has an option style and is shown in the case the type is final"]
+  #option-style(type-to-display:"final", type-of-doc: option.type)["This text has an option style and is shown in the case the type is final"]
   #sourcecode[```typst
-  #option-style(type:"final")["This text has an option style and is shown in the case the type is final"]
+  #option-style(type-to-display:"final", type-of-doc: option.type)["This text has an option style and is shown in the case the type is final"]
   ```]
 
-  #option-style(type:"minimal")["This text has an option style and is shown in the case the type is minimal"]
+  #option-style(type-to-display:"minimal", type-of-doc: option.type)["This text has an option style and is shown in the case the type is minimal"]
   #sourcecode[```typst
-  #option-style(type:"minimal")["This text has an option style and is shown in the case the type is minimal"]
+  #option-style(type-to-display:"minimal", type-of-doc: option.type)["This text has an option style and is shown in the case the type is minimal"]
   ```]
 
-  #option-style(type:"full")["This text has an option style and is shown in the case the type is full"]
+  #option-style(type-to-display:"full", type-of-doc: option.type)["This text has an option style and is shown in the case the type is full"]
   #sourcecode[```typst
-  #option-style(type:"full")["This text has an option style and is shown in the case the type is full"]
+  #option-style(type-to-display:"full", type-of-doc: option.type)["This text has an option style and is shown in the case the type is full"]
   ```]
 
-  #option-style(type:"student")["This text has an option style and is shown in the case the type is student"]
+  #option-style(type-to-display:"student", type-of-doc: option.type)["This text has an option style and is shown in the case the type is student"]
   #sourcecode[```typst
-  #option-style(type:"student")["This text has an option style and is shown in the case the type is student"]
+  #option-style(type-to-display:"student", type-of-doc: option.type)["This text has an option style and is shown in the case the type is student"]
   ```]
 
-  #option-style(type:"solution")["This text has an option style and is shown in the case the type is solution"]
+  #option-style(type-to-display:"solution", type-of-doc: option.type)["This text has an option style and is shown in the case the type is solution"]
   #sourcecode[```typst
-  #option-style(type:"solution")["This text has an option style and is shown in the case the type is solution"]
+  #option-style(type-to-display:"solution", type-of-doc: option.type)["This text has an option style and is shown in the case the type is solution"]
   ```]
 
   == Title Box
