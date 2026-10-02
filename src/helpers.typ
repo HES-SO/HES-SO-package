@@ -348,29 +348,41 @@
   let headings = ()
   let last-heading
   for todo in queried-todos {
-    let new-last-heading = query(
+    let headings-before = query(
       selector(heading).before(todo.location())
-    ).last()
+    )
+    let new-last-heading = headings-before.last(default: none)
 
-    if last-heading != new-last-heading {
-      headings.push((heading: new-last-heading, todos: (todo,)))
-       last-heading = new-last-heading
+    if headings.len() == 0 or last-heading != new-last-heading {
+      headings.push((
+        heading: new-last-heading,
+        todos: (todo,)
+      ))
+      last-heading = new-last-heading
     } else {
       headings.last().todos.push(todo)
     }
   }
 
   for head in headings {
-    link(head.heading.location())[
-      #if head.heading.at("numbering", default: none) != none {
-        numbering(head.heading.numbering, ..counter(heading).at(head.heading.location()))
+    if head.heading != none {
+      let number = if head.heading.at("numbering", default: none) != none {
+        numbering(
+          head.heading.numbering,
+          ..counter(heading).at(head.heading.location())
+        )
       }
-      #head.heading.body
-    ]
+      link(head.heading.location())[
+        #number
+        #head.heading.body
+      ]
+    } else [_Ungrouped_]
     [ ]
     box(width: 1fr, repeat[.])
-    [ ]
-    [#head.heading.location().page()]
+    if head.heading != none {
+      [ ]
+      [#head.heading.location().page()]
+    }
 
     linebreak()
     pad(left: 1em, head.todos.map(todo => {
