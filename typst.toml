@@ -13,7 +13,7 @@ homepage = "https://www.hes-so.ch/accueil"
 license = "MIT"
 description = "Common library for most HES-SO templates and packages."
 entrypoint = "src/lib.typ"
-categories = ["component", "cayout", "utility", ]
+categories = ["components", "layout", "utility", ]
 disciplines = ["engineering", "computer-science", "education"]
 keywords = [
   "Package",
