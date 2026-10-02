@@ -14,7 +14,7 @@ project_name  := file_stem(justfile_directory())
 project_tag   := "0.1.0"
 
 typst_version := "typst -V"
-typst_github  := "https://github.com/typst/typst --tag v0.14.2"
+typst_github  := "https://github.com/typst/typst --tag v0.15.0"
 
 template_dir  := join(justfile_directory(), "template")
 doc_name      := "guide-to-typst"

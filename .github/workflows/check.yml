@@ -36,6 +36,16 @@ jobs:
           fi
           echo "All versions match: $REF_VERSION"
 
+          COMPILER_TOML=$(awk -F'"' '/^compiler *=/ {print $2; exit}' typst.toml)
+          JUSTFILE_COMPILER=$(grep -o 'tag v[0-9.]\+' justfile | head -n1 | awk -F'v' '{print $2}')
+          echo "typst.toml (compiler):    $COMPILER_TOML"
+          echo "justfile (compiler):      $JUSTFILE_COMPILER"
+          if [ "$COMPILER_TOML" != "$JUSTFILE_COMPILER" ] ; then
+            echo "Typst compiler version mismatch detected!"
+            exit 1
+          fi
+          echo "All compiler versions match: $COMPILER_TOML"
+
 
   check-build:
     needs: [get-ref-version]
