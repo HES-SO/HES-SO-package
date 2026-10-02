@@ -130,16 +130,16 @@
 //------------------
 
 #let logos = (
-  hesso-logo        : read("img/logos/hesso-logo.svg", encoding: none),
-  hesso-full        : read("img/logos/hesso-full.svg", encoding: none),
-  mse               : read("img/logos/mse.svg", encoding: none),
-  swissuniversities : read("img/logos/swissuniversities.svg", encoding: none),
-  hei               : read("img/logos/hei.svg", encoding: none),
-  hevs              : read("img/logos/hevs.svg", encoding: none),
-  heiafr-short      : read("img/logos/heiafr-short.svg", encoding: none),
-  heiafr-full       : read("img/logos/heiafr-full.svg", encoding: none),
-  heigvd            : read("img/logos/heigvd.svg", encoding: none),
-  hepia             : read("img/logos/hepia.svg", encoding: none),
+  hesso-logo        : path("img/logos/hesso-logo.svg"),
+  hesso-full        : path("img/logos/hesso-full.svg"),
+  mse               : path("img/logos/mse.svg"),
+  swissuniversities : path("img/logos/swissuniversities.svg"),
+  hei               : path("img/logos/hei.svg"),
+  hevs              : path("img/logos/hevs.svg"),
+  heiafr-short      : path("img/logos/heiafr-short.svg"),
+  heiafr-full       : path("img/logos/heiafr-full.svg"),
+  heigvd            : path("img/logos/heigvd.svg"),
+  hepia             : path("img/logos/hepia.svg"),
 )
 
 
@@ -147,29 +147,29 @@
 // ----- ICONS -----
 // -----------------
 
-#let placeholder      = read("img/placeholder.svg", encoding: none)
-#let icon             = read("img/icons/icon.svg", encoding: none)
-#let condidential     = read("img/confidential.svg", encoding: none)
+#let placeholder      = path("img/placeholder.svg")
+#let icon             = path("img/icons/icon.svg")
+#let condidential     = path("img/confidential.svg")
 
 #let icons = (
-  check-badge  : read("img/icons/check-badge.svg", encoding: none),
-  check-circle : read("img/icons/check-circle.svg", encoding: none),
-  check-square : read("img/icons/check-square.svg", encoding: none),
-  check        : read("img/icons/check.svg", encoding: none),
-  circle       : read("img/icons/circle.svg", encoding: none),
-  file         : read("img/icons/file.svg", encoding: none),
-  fire         : read("img/icons/fire.svg", encoding: none),
-  folder       : read("img/icons/folder.svg", encoding: none),
-  idea         : read("img/icons/idea.svg", encoding: none),
-  important    : read("img/icons/important.svg", encoding: none),
-  info         : read("img/icons/info.svg", encoding: none),
-  rocket       : read("img/icons/rocket.svg", encoding: none),
-  square       : read("img/icons/square.svg", encoding: none),
-  todo         : read("img/icons/todo.svg", encoding: none),
-  warning      : read("img/icons/warning.svg", encoding: none),
-  think        : read("img/icons/think.svg", encoding: none),
-  help         : read("img/icons/help.svg", encoding: none),
-  x-circle     : read("img/icons/x-circle.svg", encoding: none),
-  x-square     : read("img/icons/x-square.svg", encoding: none),
-  x            : read("img/icons/x.svg", encoding: none),
+  check-badge  : path("img/icons/check-badge.svg"),
+  check-circle : path("img/icons/check-circle.svg"),
+  check-square : path("img/icons/check-square.svg"),
+  check        : path("img/icons/check.svg"),
+  circle       : path("img/icons/circle.svg"),
+  file         : path("img/icons/file.svg"),
+  fire         : path("img/icons/fire.svg"),
+  folder       : path("img/icons/folder.svg"),
+  idea         : path("img/icons/idea.svg"),
+  important    : path("img/icons/important.svg"),
+  info         : path("img/icons/info.svg"),
+  rocket       : path("img/icons/rocket.svg"),
+  square       : path("img/icons/square.svg"),
+  todo         : path("img/icons/todo.svg"),
+  warning      : path("img/icons/warning.svg"),
+  think        : path("img/icons/think.svg"),
+  help         : path("img/icons/help.svg"),
+  x-circle     : path("img/icons/x-circle.svg"),
+  x-square     : path("img/icons/x-square.svg"),
+  x            : path("img/icons/x.svg"),
 )
