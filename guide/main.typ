@@ -5,6 +5,8 @@
 #show:make-glossary
 #register-glossary(entry-list)
 
+#show: init-syntaxes
+
 //-------------------------------------
 // Template config
 //

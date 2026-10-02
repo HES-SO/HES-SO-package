@@ -38,8 +38,11 @@
   numbers-width: -1.2em,
 )
 // code blocks
-#set raw(syntaxes:"syntax/VHDL.sublime-syntax")
-#set raw(syntaxes:"syntax/riscv.sublime-syntax")
+#let init-syntaxes(doc) = {
+  set raw(syntaxes: path("syntax/VHDL.sublime-syntax"))
+  set raw(syntaxes: path("syntax/riscv.sublime-syntax"))
+  doc
+}
 
 //-------------------------------------
 // Internationalization
