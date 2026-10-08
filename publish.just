@@ -36,6 +36,8 @@ dry-run version:
   fi
 
 # Alias for to-packages
+[linux]
+[macos]
 @copy version: (to-packages version)
 
 # Publish a release to the packages repository
