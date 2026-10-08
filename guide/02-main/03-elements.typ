@@ -98,7 +98,7 @@
   )
   == Custom Lists
 
-  Custom lists are available in the #link("https://github.com/HES-SO/HES-SO-package/blob/main/lib/items.typ")[items.typ]:
+  Custom lists are available in the #link("https://github.com/HES-SO/Typst-HES-SO-core/blob/main/lib/items.typ")[items.typ]:
 
   #table(
     columns: (40%,60%),
@@ -629,7 +629,7 @@
   #pagebreak()
   == Icon Boxes
 
-  Custom icon boxes are available in the #link("https://github.com/HES-SO/HES-SO-package/blob/main/lib/boxes.typ")[boxes.typ]:
+  Custom icon boxes are available in the #link("https://github.com/HES-SO/Typst-HES-SO-core/blob/main/lib/boxes.typ")[boxes.typ]:
 
   #infobox()[
     #align(left,
@@ -700,7 +700,7 @@
 
   == Color Boxes
 
-  Custom color boxes are available in the #link("https://github.com/HES-SO/HES-SO-package/blob/main/lib/boxes.typ")[boxes.typ]:
+  Custom color boxes are available in the #link("https://github.com/HES-SO/Typst-HES-SO-core/blob/main/lib/boxes.typ")[boxes.typ]:
 
 // TODO change HEI color
 
@@ -734,7 +734,7 @@
 
   === Todo Box
 
-  Custom todo box is available in the #link("https://github.com/HES-SO/HES-SO-package/blob/main/lib/boxes.typ")[boxes.typ]:
+  Custom todo box is available in the #link("https://github.com/HES-SO/Typst-HES-SO-core/blob/main/lib/boxes.typ")[boxes.typ]:
 
   #todo("This is not finished")
 
@@ -747,7 +747,7 @@
   The option style allows to unterlight a text depending on the type or state of the document.
   Within the `/01-settings/metadata.typ` the `option.type` can be set to `draft` or `final` or other types.
 
-  Custom option style is available in the #link("https://github.com/HES-SO/HES-SO-package/blob/main/lib/boxes.typ")[boxes.typ]:
+  Custom option style is available in the #link("https://github.com/HES-SO/Typst-HES-SO-core/blob/main/lib/boxes.typ")[boxes.typ]:
 
   #option-style(
     type-to-display:"draft",
@@ -784,7 +784,7 @@
 
   == Title Box
 
-  Custom title boxes are available in the #link("https://github.com/HES-SO/HES-SO-package/blob/main/lib/boxes.typ")[boxes.typ]:
+  Custom title boxes are available in the #link("https://github.com/HES-SO/Typst-HES-SO-core/blob/main/lib/boxes.typ")[boxes.typ]:
 
   #titlebox(title: [Title], subtitle: [Subtitle])
   #sourcecode[```typst
@@ -801,7 +801,7 @@
 
   == Exam Header
 
-  Custom exam headers are available in the #link("https://github.com/HES-SO/HES-SO-package/blob/main/lib/boxes.typ")[boxes.typ]:
+  Custom exam headers are available in the #link("https://github.com/HES-SO/Typst-HES-SO-core/blob/main/lib/boxes.typ")[boxes.typ]:
 
   #exam-header(nbr-ex: 0, lang: "en")
   ```typst

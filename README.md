@@ -1,5 +1,5 @@
-![GitHub Repo stars](https://img.shields.io/github/stars/hes-so/HES-SO-package)
-![GitHub Release](https://img.shields.io/github/v/release/hes-so/HES-SO-package)
+![GitHub Repo stars](https://img.shields.io/github/stars/hes-so/Typst-HES-SO-core)
+![GitHub Release](https://img.shields.io/github/v/release/hes-so/Typst-HES-SO-core)
 
 <h1 align="center">
   HES-SO - Master Typst package
@@ -18,7 +18,7 @@ Template can be found in our [GitHub organization](https://github.com/HES-SO).
 1. To use this package, simply add the following code to your document:
 
    ```typst
-   #import "@preview/hes-so-package:0.1.0": *
+   #import "@preview/hes-so-core:0.1.0": *
    ```
 
 ## Features
@@ -37,9 +37,9 @@ Template can be found in our [GitHub organization](https://github.com/HES-SO).
 
 If you need help writing your document look at the [Typst documentation](https://typst.app/docs/).
 For the package specifics, have a look at the Guide to Typst built from the [`guide/`](./guide) folder:
-[EN](https://github.com/HES-SO/HES-SO-package/releases/latest/download/guide-to-typst-en_minimal.pdf)
-[DE](https://github.com/HES-SO/HES-SO-package/releases/latest/download/guide-to-typst-de_minimal.pdf)
-[FR](https://github.com/HES-SO/HES-SO-package/releases/latest/download/guide-to-typst-fr_minimal.pdf).
+[EN](https://github.com/HES-SO/Typst-HES-SO-core/releases/latest/download/guide-to-typst-en_minimal.pdf)
+[DE](https://github.com/HES-SO/Typst-HES-SO-core/releases/latest/download/guide-to-typst-de_minimal.pdf)
+[FR](https://github.com/HES-SO/Typst-HES-SO-core/releases/latest/download/guide-to-typst-fr_minimal.pdf).
 
 ## Credits
 
