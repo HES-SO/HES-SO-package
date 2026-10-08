@@ -51,6 +51,13 @@ This package is based on the work done for the HEI-Vs templates
 
 All notable information about contributing to this project can be found in the [CONTRIBUTING.md](./CONTRIBUTING.md) file.
 
+## Licenses for Third-Party Visual Assets
+This package include third-party icons and logos. Theses asset are under the followinf licenses:
+
+- **Institutional Logos**: The logos of the participating universities/schools are the exclusive property of their respective institutions. They are included here strictly for official academic formatting ("All Rights Reserved").
+- **UN SDG Logos**: The Sustainable Development Goals (SDG) logos are the intellectual property of the United Nations. They are used in this template strictly for non-commercial, academic, and informational purposes.
+- **Vector Icons**: Other graphical icons used in this template are sourced from [SVG Repo](https://www.svgrepo.com/) and are distributed under open licenses.
+
 ## Issues and Support
 
 If you encounter any issues or have questions regarding the course or any of the repositories, please feel free to open an issue in the respective repository. Our team will be happy to assist you.
