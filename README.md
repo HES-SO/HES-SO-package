@@ -2,16 +2,11 @@
 ![GitHub Release](https://img.shields.io/github/v/release/hes-so/HES-SO-package)
 
 <h1 align="center">
-  <br>
-  <img src="./src/img/logos/hesso-logo.svg" alt="HES-SO Logo" width="350">
-  <br>
-      HES-SO - Master Typst package
-  <br>
+  HES-SO - Master Typst package
 </h1>
+
 <div align="center">
-  <br>
-  <img src="./src/img/logos/mse.svg" alt="MSE Logo" width="350">
-  <br>
+  <img src="./src/img/logos/hesso-logo.svg" alt="HES-SO Logo" width="350">
 </div>
 
 This is a master package for all HES-SO Typst templates and packages. The purpose of this package is to be used as base for other package or as package part of template.
