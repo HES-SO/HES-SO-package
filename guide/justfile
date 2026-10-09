@@ -13,9 +13,7 @@ project_dir   := justfile_directory()
 project_name  := file_stem(justfile_directory())
 
 typst_version := "typst -V"
-typst_github  := "https://github.com/typst/typst --tag v0.14.2"
 
-option_script := "00-templates/scripts/change-options.bash"
 output_dir    := "05-pdf"
 doc_name      := "main"
 type          := "full"
@@ -36,19 +34,6 @@ lang          := "en"
   echo "    Typst       : `{{typst_version}}`"
   echo "    Projectdir  : {{project_dir}}"
   echo "    Projectname : {{project_name}}"
-
-# install required sw
-[windows]
-[linux]
-@install:
-  echo "Install typst"
-  cargo install --git {{typst_github}}
-
-# install required sw
-[macos]
-@install:
-  echo "Install typst"
-  brew install typst
 
 # watch a typ file for continuous incremental build
 watch file_name=doc_name:

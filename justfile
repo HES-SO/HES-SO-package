@@ -11,10 +11,10 @@ open := if os() == "linux" {
 
 project_dir   := justfile_directory()
 project_name  := file_stem(justfile_directory())
-project_tag   := "0.0.6"
+project_tag   := "0.1.0"
 
 typst_version := "typst -V"
-typst_github  := "https://github.com/typst/typst --tag v0.14.2"
+typst_github  := "https://github.com/typst/typst --tag v0.15.0"
 
 template_dir  := join(justfile_directory(), "template")
 doc_name      := "guide-to-typst"
@@ -23,21 +23,32 @@ lang          := "en"
 
 local_dir := if os() == "macos" {
   "~/Library/Application\\ Support/typst/packages/local"
+} else if os() == "windows" {
+  env("APPDATA", "") / "typst/packages/local"
 } else {
   "~/.local/share/typst/packages/local"
 }
 
 preview_dir := if os() == "macos" {
   "~/Library/Caches/typst/packages/preview"
+} else if os() == "windows" {
+  env("APPDATA", "") / "typst/packages/preview"
 } else {
   "~/.cache/typst/packages/preview"
 }
 
 release_dir := if os() == "macos" {
-"~/Library/Application\\ Support/typst/packages/preview"
+  "~/Library/Application\\ Support/typst/packages/preview"
+} else if os() == "windows" {
+  env("APPDATA", "") / "typst/packages/preview"
 } else {
-"~/.local/share/typst/packages/preview"
+  "~/.local/share/typst/packages/preview"
 }
+
+##################################################
+# MODULES
+#
+mod publish "publish.just"
 
 ##################################################
 # COMMANDS
@@ -54,6 +65,12 @@ release_dir := if os() == "macos" {
   echo "    Typst       : `{{typst_version}}`"
   echo "    Projectdir  : {{project_dir}}"
   echo "    Projectname : {{project_name}}"
+
+# configure git to use repository hooks
+@setup-hooks:
+  git config core.hooksPath .githooks
+  chmod +x .githooks/* || true
+  echo "Git hooks configured successfully (.githooks)"
 
 # install required sw
 [windows]
@@ -78,6 +95,15 @@ release_dir := if os() == "macos" {
   rm -rf {{path}}/{{project_tag}}
   ln -s {{project_dir}} {{path}}/{{project_tag}}
 
+# create or update a symlink to the current project root
+[windows]
+@link path:
+  echo "Link template in {{path}} to current project root"
+  echo "  {{path}}/{{project_tag}} -> {{project_dir}}"
+  powershell -NoProfile -Command "New-Item -ItemType Directory -Force -Path '{{path}}' | Out-Null"
+  powershell -NoProfile -Command "if (Test-Path -LiteralPath '{{path}}/{{project_tag}}') { [System.IO.Directory]::Delete('{{path}}/{{project_tag}}', [bool]1) }"
+  powershell -NoProfile -Command "try { New-Item -ItemType Junction -Path '{{path}}/{{project_tag}}' -Target '{{project_dir}}' | Out-Null } catch { New-Item -ItemType SymbolicLink -Path '{{path}}/{{project_tag}}' -Target '{{project_dir}}' | Out-Null }"
+
 # remove symlink/folder for current project version
 [linux]
 [macos]
@@ -86,32 +112,45 @@ release_dir := if os() == "macos" {
   echo "  {{path}}/{{project_tag}}"
   rm -rf {{path}}/{{project_tag}}
 
+# remove symlink/folder for current project version
+[windows]
+@unlink path:
+  echo "Remove template link/folder from {{path}}"
+  echo "  {{path}}/{{project_tag}}"
+  powershell -NoProfile -Command "if (Test-Path -LiteralPath '{{path}}/{{project_tag}}') { [System.IO.Directory]::Delete('{{path}}/{{project_tag}}', [bool]1) }"
+
 # create or update a symlink in preview package path to the current project root
+[windows]
 [linux]
 [macos]
 @link-preview: (link preview_dir / project_name)
 
 # create or update a symlink in local package path to the current project root
+[windows]
 [linux]
 [macos]
 @link-local: (link local_dir / project_name)
 
 # create or update symlinks preview and local to the current project root
+[windows]
 [linux]
 [macos]
 @link-all: link-preview link-local
 
 # remove preview symlink/folder for current project version
+[windows]
 [linux]
 [macos]
 @unlink-preview: (unlink preview_dir / project_name)
 
 # remove local symlink/folder for current project version
+[windows]
 [linux]
 [macos]
 @unlink-local: (unlink local_dir / project_name)
 
 # remove all symlinks preview and local for current project version
+[windows]
 [linux]
 [macos]
 @unlink-all: unlink-preview unlink-local
@@ -132,7 +171,13 @@ check-link path:
     echo "  unlinked"
   fi
 
+# check if a symlink exists at the given path and where it points
+[windows]
+check-link path:
+  @powershell -NoProfile -Command "Write-Host 'Check link for {{path}}'; if (Test-Path -LiteralPath '{{path}}') { if ((Get-Item -LiteralPath '{{path}}' -Force).Attributes.HasFlag([System.IO.FileAttributes]::ReparsePoint)) { Write-Host ('  linked -> ' + ((Get-Item -LiteralPath '{{path}}' -Force).Target -join '')) } else { Write-Host '  exists (directory, not a symlink)' } } else { Write-Host '  unlinked' }"
+
 # check if both preview and local symlinks exist
+[windows]
 [linux]
 [macos]
 @check-links:
@@ -217,3 +262,6 @@ open file_name=doc_name:
   del /q /s template\metadata.pdf 2>nul
   del /q /s template\main\*.pdf 2>nul
   del /q /s template\tail\*.pdf 2>nul
+
+@todo:
+    typst eval "query(<todo>).map(m => m.value.body)" --in document.typ

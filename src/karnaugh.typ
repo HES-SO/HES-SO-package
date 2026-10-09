@@ -1,7 +1,14 @@
 //
 // Description: Creating nice looking karnugh tables
 // Author     : Silvan Zahno
-//
+
+/// Display a Karnaugh table
+///
+/// - inputs (array): input labels
+/// - output (content): output label
+/// - stroke (stroke): _*Deprecated*_
+/// - content (array): cell contents as a 2D array (2x4, 4x4 or 8x4)
+/// -> content
 #let karnaugh(
   inputs: ($a$,$b$,$c$,$d$,$e$),
   output: [$y$],

@@ -1,5 +1,5 @@
 #import "helpers.typ": *
 #import "karnaugh.typ": *
 
-#let name = "hes-so-package"
-#let version = version(0,0,6)
+#let name = "hes-so-core"
+#let version = std.version(0,1,0)

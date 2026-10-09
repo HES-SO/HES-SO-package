@@ -25,8 +25,8 @@ jobs:
         env:
           RELEASE_VERSION: ${{ inputs.release_version }}
         run: |
-          mkdir -p ~/.cache/typst/packages/preview/hes-so-package/${{ env.RELEASE_VERSION }}
-          cp -r ./ ~/.cache/typst/packages/preview/hes-so-package/${{ env.RELEASE_VERSION }}
+          mkdir -p ~/.cache/typst/packages/preview/hes-so-core/${{ env.RELEASE_VERSION }}
+          cp -r ./ ~/.cache/typst/packages/preview/hes-so-core/${{ env.RELEASE_VERSION }}
 
       - name: Build Guide to Typst - ${{ matrix.lang }}/${{ matrix.type }}
         run: |
